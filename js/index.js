@@ -175,7 +175,7 @@ function initPlayer(conf)
 			localStorage.setItem("lastVideoDuration", video.currentTime);
 			player.reset();
 			controls.remove();
-			ErrorCode("please check your internet connection" , 'btnBigPlay' , 'refreshVideo');
+			ErrorCode("something went wrong please try again later" , 'btnBigPlay' , 'refreshVideo');
 		});
 		
 		video.load();

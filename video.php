@@ -1,7 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin:*');
-	/*
-    include("akamai_token_v2.php");
+	include("akamai_token_v2.php");
 
 
     $conf = new Akamai_EdgeAuth_Config();
@@ -14,7 +12,7 @@ header('Access-Control-Allow-Origin:*');
     $token = $t->generate_token($conf);
 	$token_urlencode = urlencode($token);
 		
-	*/
+	
 	$referer = $_SERVER["HTTP_REFERER"] ; //substr($_SERVER["HTTP_REFERER"],0,43);
 
 	$url = parse_url($referer)['host'];

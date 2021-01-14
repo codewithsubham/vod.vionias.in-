@@ -1,37 +1,39 @@
 <?php 
-	include("../auth.php"); 
-	include("../../thirdparty/akamai/akamai_token_v2.php");
 	
-	$conf = new Akamai_EdgeAuth_Config();
-	$t = new Akamai_EdgeAuth_Generate();
-	$conf->set_field_delimiter("~");
-	$conf->set_key("d4121cb37d1edfbfeb76212064193925");
-	$conf->set_algo("sha256");
-	$conf->set_window(5*3600); //Seconds
-	$conf->set_acl("/*"); // /* <- for all
-	$token = $t->generate_token($conf);
+	include("akamai_token_v2.php");
+
+
+    $conf = new Akamai_EdgeAuth_Config();
+    $t = new Akamai_EdgeAuth_Generate();
+    $conf->set_field_delimiter("~");
+    $conf->set_key("d4121cb37d1edfbfeb76212064193925");
+    $conf->set_algo("sha256");
+    $conf->set_window(5*3600); //Seconds
+    $conf->set_acl("/*"); // /* <- for all
+    $token = $t->generate_token($conf);
 	$token_urlencode = urlencode($token);
-	
+
+
 	$user_agent = $_SERVER["HTTP_USER_AGENT"];
 
 	//$video_url="http://104.199.144.5/bplayer/video.php?id=".$_GET["id"];
 
-	$video_url="http://visionias.in/student/videoplayer_v2/video.php?id=".$_GET["id"];
+	//	$video_url="video.php?id=".$_GET["id"];
 
 
-	$poster_url="./poster.jpg";
-	$referer = $_SERVER["HTTP_REFERER"];
-
+	$referer = true;// $_SERVER["HTTP_REFERER"];
+	//4471202007311000 id
 
 	if(preg_match("/visionias/i", $referer) || !preg_match("/kecua/i", $referer)) {
 		// For iPad/iphone
 		if (preg_match("/iPad/i", $user_agent) || preg_match("/iPhone/i", $user_agent)) {
-			$video_source="hls: \"http://104.199.144.5:1935/vod/smil:".$_GET["id"].".smil/playlist.m3u8\"";
-			//$video_source="hls: \"https://visionias.akamaized.net/video/smil:".$_GET["id"].".smil/playlist.m3u8?hdnts=".$token_urlencode."\"";
+		//	$video_source="hls: \"http://104.199.144.5:1935/vod/smil:".$_GET["id"].".smil/playlist.m3u8\"";
+			$video_source="hls: \"https://visionias.akamaized.net/video/smil:".$_GET["id"].".smil/playlist.m3u8?hdnts=".$token_urlencode."\"";
 		}
 		else {
-			$video_source="dash: \"".$video_url."\"";
-			//$video_source = "dash: \"https://visionias.akamaized.net/video/smil:".$_GET["id"].".smil/manifest.mpd?hdnts=".$token_urlencode."\"";
+		//	$video_source="dash: \"http://104.199.144.5:1935/vod/smil:".$_GET["id"].".smil/manifest.mpd\"";
+		//	$video_source="dash: \"".$video_url."\"";
+			$video_source = "dash: \"https://visionias.akamaized.net/video/smil:".$_GET["id"].".smil/manifest.mpd?hdnts=".$token_urlencode."\"";
 		}
 	}else {
 		print "This page must be accessed within an iFrame.";
@@ -39,7 +41,7 @@
 	}
 	
 	// user details
-	$user_details = $student_mobile ? $student_mobile : $student_email;
+	$user_details = "";//$student_mobile ? $student_mobile : $student_email;
 ?>
 
 <html>
@@ -64,8 +66,7 @@
 <script>	
 		
 const conf = {
-	//4380201902171700
-	userName:'<?php echo $mid ?>',
+	userName:"", 
 	videoId:'<?php echo $_GET["id"] ?>',
 	
 	container: "playerContainer",
@@ -90,7 +91,7 @@ const conf = {
 	},
 
 	overlay: {
-		show:true,
+		show:false,
  		overlayText: '<?php echo $user_details?>', 
 		pposX: 100,
 		pposY: 200,
@@ -102,7 +103,7 @@ const conf = {
 	},
 
 	overlayPhoneNumber:{
-        show:true,
+        show:false,
         posX:10,
 		posY:10,
 		positionX:'left',
@@ -122,6 +123,9 @@ const conf = {
 };
 </script>
 	
-<script type="text/javascript" src="js/index.js"></script></body>
+<!--<script type="text/javascript" src="js/index.js"></script>-->
+	<script type="text/javascript" src="js/indexmin.js"></script>
+
+</body>
 
 </html>
