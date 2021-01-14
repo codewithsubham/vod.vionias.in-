@@ -31,9 +31,9 @@
 			$video_source="hls: \"https://visionias.akamaized.net/video/smil:".$_GET["id"].".smil/playlist.m3u8?hdnts=".$token_urlencode."\"";
 		}
 		else {
-		//	$video_source="dash: \"http://104.199.144.5:1935/vod/smil:".$_GET["id"].".smil/manifest.mpd\"";
+			$video_source="dash: \"http://104.199.144.5:1935/vod/smil:".$_GET["id"].".smil/manifest.mpd\"";
 		//	$video_source="dash: \"".$video_url."\"";
-			$video_source = "dash: \"https://visionias.akamaized.net/video/smil:".$_GET["id"].".smil/manifest.mpd?hdnts=".$token_urlencode."\"";
+		//	$video_source = "dash: \"https://visionias.akamaized.net/video/smil:".$_GET["id"].".smil/manifest.mpd?hdnts=".$token_urlencode."\"";
 		}
 	}else {
 		print "This page must be accessed within an iFrame.";
