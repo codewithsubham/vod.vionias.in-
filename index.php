@@ -21,7 +21,7 @@
 	//	$video_url="video.php?id=".$_GET["id"];
 
 
-	$referer = true;// $_SERVER["HTTP_REFERER"];
+	$referer =  $_SERVER["HTTP_REFERER"];
 	//4471202007311000 id
 
 	if(preg_match("/visionias/i", $referer) || !preg_match("/kecua/i", $referer)) {
